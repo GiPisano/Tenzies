@@ -6,7 +6,7 @@ import Confetti from "react-confetti";
 
 export default function App() {
   const { width, height } = useWindowSize();
-  const [dice, setDice] = useState(generateAllNewDice());
+  const [dice, setDice] = useState(() => generateAllNewDice());
 
   const gameWon =
     dice.every((die) => die.isHeld) &&
@@ -26,6 +26,9 @@ export default function App() {
         die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6) },
       ),
     );
+    if (gameWon) {
+      setDice(generateAllNewDice());
+    }
   }
 
   function hold(id) {
